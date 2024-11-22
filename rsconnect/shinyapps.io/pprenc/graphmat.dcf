@@ -4,7 +4,7 @@ username: pprenc
 account: pprenc
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
-appId: 13420591
-bundleId: 9400177
+appId: 13420737
+bundleId: 9400184
 url: https://pprenc.shinyapps.io/graphmat/
 version: 1

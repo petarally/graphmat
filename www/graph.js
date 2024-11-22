@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const width = 1200,
+  const width = 800,
     height = 600;
 
   // Create SVG element
@@ -229,6 +229,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 `Edge from ${source.id} to ${target.id}, Weight: ${newLink.weight}`
               );
             });
+
+          // Add the reverse link for double-sided edges
         } else if (graphType === "double-sided") {
           console.log("Drawing double-sided edge with arrows"); // Debug log
           svg
@@ -246,6 +248,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 `Double-sided edge from ${source.id} to ${target.id}, Weight: ${newLink.weight}`
               );
             });
+
+          // Add the reverse link for double-sided edges
+          const reverseLink = {
+            source: target.id,
+            target: source.id,
+            weight: parseFloat(weight),
+          };
+          links.push(reverseLink);
+          console.log("Reverse link added for double-sided edge:", reverseLink); // Debug log
+          console.log("Current links:", links); // Debug log
         } else {
           console.log("Drawing undirected edge"); // Debug log
           // Draw undirected edge (simple line)
@@ -283,8 +295,12 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("processGraph")
     .addEventListener("click", function () {
-      const graphData = { nodes, links };
-      console.log("Graph data sent to Shiny:", graphData); // Log graph data
-      Shiny.setInputValue("graphData", JSON.stringify(graphData));
+      try {
+        const graphData = { nodes, links };
+        console.log("Graph data sent to Shiny:", graphData); // Log graph data
+        Shiny.setInputValue("graphData", JSON.stringify(graphData));
+      } catch (error) {
+        console.error("Error sending graph data to Shiny:", error);
+      }
     });
 });
